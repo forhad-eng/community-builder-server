@@ -44,6 +44,13 @@ async function run() {
             const result = await bookingCollection.insertOne(bookingDetails)
             res.send(result)
         })
+
+        app.delete('/book/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: ObjectId(id) }
+            const result = await bookingCollection.deleteOne(query)
+            res.send(result)
+        })
     } finally {
     }
 }
