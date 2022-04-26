@@ -30,6 +30,14 @@ async function run() {
             res.send(activity)
         })
 
+        app.get('/book', async (req, res) => {
+            const email = req.query.email
+            const query = { email }
+            const cursor = bookingCollection.find(query)
+            const result = await cursor.toArray()
+            res.send(result)
+        })
+
         app.post('/book', async (req, res) => {
             const bookingDetails = req.body
             console.log(bookingDetails)
