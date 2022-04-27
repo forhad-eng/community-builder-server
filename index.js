@@ -31,6 +31,12 @@ async function run() {
             res.send(activity)
         })
 
+        app.post('/activity', async (req, res) => {
+            const activity = req.body
+            const result = await activityCollection.insertOne(activity)
+            res.send(result)
+        })
+
         //booking collection apis
         app.get('/book', async (req, res) => {
             const email = req.query.email
