@@ -17,6 +17,7 @@ async function run() {
         const activityCollection = client.db('community-builder').collection('activity')
         const bookingCollection = client.db('community-builder').collection('booking')
 
+        //activity collection apis
         app.get('/', async (req, res) => {
             const cursor = activityCollection.find({})
             const result = await cursor.toArray()
@@ -30,12 +31,19 @@ async function run() {
             res.send(activity)
         })
 
+        //booking collection apis
         app.get('/book', async (req, res) => {
             const email = req.query.email
-            const query = { email }
-            const cursor = bookingCollection.find(query)
-            const result = await cursor.toArray()
-            res.send(result)
+            if (email) {
+                const query = { email }
+                const cursor = bookingCollection.find(query)
+                const result = await cursor.toArray()
+                res.send(result)
+            } else {
+                const cursor = bookingCollection.find({})
+                const result = await cursor.toArray()
+                res.send(result)
+            }
         })
 
         app.post('/book', async (req, res) => {
